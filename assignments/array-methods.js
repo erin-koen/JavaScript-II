@@ -77,16 +77,40 @@ console.log(largeShirts);
 
 // ==== Challenge 4: Use .reduce() ====
 // The donations need to be tallied up and reported for tax purposes. Add up all the donations into a ticketPriceTotal array and log the result
-let ticketPriceTotal = runners.reduce(function)(total, current){
+const ticketPriceTotal = runners.reduce(function(total, current) {
     return total + current.donation;
-},0);
+}, 0);
 console.log(ticketPriceTotal);
 
 // ==== Challenge 5: Be Creative ====
 // Now that you have used .forEach(), .map(), .filter(), and .reduce().  I want you to think of potential problems you could solve given the data set and the 5k fun run theme.  Try to create and then solve 3 unique problems using one or many of the array methods listed above.
 
 // Problem 1
-
+// let's find the average donation size:
+// accidentally left out the return statement on the second line of this, but it seems to work anyway, why is that?
+const averageDonation = runners.reduce(function(total, current, index, array)  {
+    total += current.donation;
+    if (index === array.length-1) {
+        return total/array.length
+    } else {
+        return total;
+    }
+}, 0);
+console.log(averageDonation)
 // Problem 2
+// Now let's see which runners have donated well above the average and create a new array for VIPs:
+let vip = runners.filter(runner => runner.donation > averageDonation*1.25);
+
+console.log(vip);
+
 
 // Problem 3
+// Now let's see what percentage of the total fundraising these VIPs accounted for, so that we can more accurately plan our outreach for next year's race:
+
+const vipDonation = vip.reduce(function(total, current){
+    return total+current.donation;
+}, 0);
+console.log(vipDonation);
+
+let vipPercentage = vipDonation/ticketPriceTotal;
+console.log(vipPercentage)
